@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="project.isseyo.login.mapper.LoginMapper">	<!-- xml파일을 사용할 mapper가 있는 경로 -->
+  
+	
+	<insert id="insertUser" parameterType="loginDto">
+			<![CDATA[
+			INSERT INTO ISY_USER 
+				( BIZ_EMAIL
+				  , USER_ID
+				  , PASSWORD
+				  , USER_NM
+				  , BIZ_NUM
+				  , BIZ_NM
+				  , BIZ_TYPE
+				  , BIZ_ITEM
+				  , BIZ_TEL
+				  , BIZ_API_KEY
+				  , REGIST_DT )
+			VALUES 
+				( #{bizEmail}
+				  , #{userId}
+				  , #{password}
+				  , #{userNm}
+				  , #{bizNum}
+				  , #{bizNm}
+				  , #{bizType}
+				  , #{bizItem}
+				  , #{bizTel}
+				  , #{bizApiKey}
+				  , SYSDATE() )
+			]]>
+	</insert>
+	
+	<select id="selectUser" resultType="loginDto">
+			<![CDATA[
+			SELECT
+				PK_USER_SEQ
+				, USER_ID
+				, USER_NM
+				, BIZ_NUM
+				, BIZ_NM
+				, BIZ_TYPE
+				, BIZ_ITEM
+				, PASSWORD
+				, BIZ_TEL
+				, BIZ_EMAIL
+				, BIZ_API_KEY
+				, REGIST_DT
+				, PWD_UPDT_DT
+				, DEL_YN
+				, USE_YN
+			FROM isy_user
+			WHERE DEL_YN = 'N' 
+			AND USER_ID = #{userId}
+			AND PASSWORD = #{password}
+			]]>
+	</select>
+	
+	<!-- <select> 태그를 이용하여 select 쿼리임을 나타냄. 앞서 mapper에서 말했던 메소드의 이름은 select 쿼리의 id값과 같아야함. -->
+	<select id="select" resultType="int">	
+			SELECT 1
+			FROM
+				dual
+	</select>
+	<select id="selectBoardList" resultType="LoginDto">	<!-- application.properties에서 type alias를 잡은 경우 Dto클래스만 적어도 됨 -->
+		<![CDATA[
+			SELECT
+				board_idx, title, hit_cnt, TO_DATE(created_datetime , 'YYYY-MM-DD HH24:MI') AS created_datetime
+			FROM
+				t_board
+			WHERE
+				deleted_yn = 'N'
+			ORDER BY board_idx DESC
+		]]>
+	</select>
+	
+	<!-- html input 태그에서 name='title' 부분. 마이바티스에서는 #{변수명} 형식으로 전달된 데이터를 사용함. -->
+	<insert id="insertBoard" parameterType="LoginDto">
+		<![CDATA[
+			INSERT INTO t_board
+			(
+				board_idx, title, contents, created_datetime, creator_id
+			)
+			VALUES
+			(
+				board_idx_seq.NEXTVAL,
+				#{title},
+				#{contents},
+				SYSDATE,
+				#{creatorId}
+			)
+		]]>
+	</insert>
+</mapper>

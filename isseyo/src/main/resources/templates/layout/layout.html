@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isseyo</title>
+
+<head>
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome -->
+	<link th:href="@{/plugins/fontawesome-free/css/all.min.css}" rel="stylesheet" />
+	<!-- Theme style -->
+	<link th:href="@{/dist/css/adminlte.min.css}" rel="stylesheet" />
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link th:href="@{/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet" />
+	<!-- iCheck -->
+	<link th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}" rel="stylesheet" />
+	<!-- JQVMap -->
+	<link th:href="@{/plugins/jqvmap/jqvmap.min.css}" rel="stylesheet" />
+	<!-- overlayScrollbars -->
+	<link th:href="@{/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}" rel="stylesheet" />
+	<!-- Daterange picker -->
+	<link th:href="@{/plugins/daterangepicker/daterangepicker.css}" rel="stylesheet" />
+	<!-- summernote -->
+	<link th:href="@{/plugins/summernote/summernote-bs4.min.css}" rel="stylesheet" />
+	<!-- codemirror -->
+	<link th:href="@{/plugins/codemirror/codemirror.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/codemirror/theme/monokai.css}" rel="stylesheet" />
+	<!-- DataTables -->
+	<link th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/datatables-select/css/select.bootstrap4.min.css}" rel="stylesheet" />
+	
+	<!-- jQuery -->
+	<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+	<!-- jQuery-validation -->
+	<script th:src="@{/plugins/jquery-validation/jquery.validate.min.js}"></script>
+	<script th:src="@{/plugins/jquery-validation/additional-methods.min.js}"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+	<!-- AdminLTE App -->
+	<script th:src="@{/dist/js/adminlte.js}"></script>
+	
+	<!-- DataTables  & Plugins -->
+	<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+	<script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+	<script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+	<script th:src="@{/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+	<script th:src="@{/plugins/datatables-select/js/dataTables.select.min.js}"></script>
+	<script th:src="@{/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+	<script th:src="@{/plugins/jszip/jszip.min.js}"></script>
+	<script th:src="@{/plugins/pdfmake/pdfmake.min.js}"></script>
+	<script th:src="@{/plugins/pdfmake/vfs_fonts.js}"></script>
+	<script th:src="@{/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
+	<script th:src="@{/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
+	<script th:src="@{/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
+
+	<!-- sweetalert2 -->
+	<link th:href="@{/plugins/sweetalert2/sweetalert2.min.css}" rel="stylesheet" />
+	<script th:src="@{/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	
+
+</head>
+
+<body class="hold-transition">
+
+	<div class="wrapper">
+		<th:block th:replace="/layout/fragments/head :: headFragment"></th:block>
+
+		<th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+
+		<th:block layout:fragment="content"></th:block>
+
+		<th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
+	</div>
+
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+		$.widget.bridge('uibutton', $.ui.button)
+	</script>
+	<!-- Bootstrap 4 -->
+	<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- ChartJS -->
+	<script th:src="@{/plugins/chart.js/Chart.min.js}"></script>
+	<!-- Sparkline -->
+	<script th:src="@{/plugins/sparklines/sparkline.js}"></script>
+	<!-- jQuery Knob Chart -->
+	<script th:src="@{/plugins/jquery-knob/jquery.knob.min.js}"></script>
+	<!-- daterangepicker -->
+	<script th:src="@{/plugins/moment/moment.min.js}"></script>
+	<script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+	<!-- Tempusdominus Bootstrap 4 -->
+	<script th:src="@{/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+	<!-- Summernote -->
+	<script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
+	<!-- overlayScrollbars -->
+	<script th:src="@{/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+	<!-- file -->
+	<script th:src="@{/plugins/bs-custom-file-input/bs-custom-file-input.min.js}"></script>
+	<!-- codemirror -->
+	<script th:src="@{/plugins/codemirror/codemirror.js}"></script>
+	<script th:src="@{/plugins/codemirror/mode/javascript/javascript.js}"></script>
+	<script th:src="@{/plugins/codemirror/mode/xml/xml.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="project.isseyo.product.mapper.ProductMapper">	<!-- xml파일을 사용할 mapper가 있는 경로 -->
+  	
+  	<resultMap type="project.isseyo.product.dto.ProductDto" id="productMap">
+        <result property="pkProductSeq" column="PK_PRODUCT_SEQ"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productCode" column="PRODUCT_CODE"/>
+		<result property="standard" column="STANDARD"/>
+		<result property="unit" column="UNIT"/>
+		<result property="productImg" column="PRODUCT_IMG"/>
+		<result property="divn" column="DIVN"/>
+		<result property="etc" column="ETC"/>
+		<result property="useYn" column="USE_YN"/>
+		<result property="delYn" column="DEL_YN"/>
+		<result property="registId" column="REGIST_ID"/>
+		<result property="registDt" column="REGIST_DT"/>
+		<result property="updateId" column="UPDATE_ID"/>
+		<result property="updateDt" column="UPDATE_DT"/>
+		<result property="pkUserSeq" column="PK_USER_SEQ"/>
+    </resultMap>
+    
+	<insert id="insertProductDetail" parameterType="java.util.HashMap">
+			<![CDATA[
+			INSERT INTO ISY_PRODUCT_DETAIL 
+				( PK_PRODUCT_SEQ
+				  , VALUE
+				  , ATTRIBUTE
+				  , PK_USER_SEQ
+				  )
+			VALUES 
+				( #{pkProductSeq}
+				  , #{value}
+				  , #{attribute}
+				  , #{pkUserSeq}
+				  );
+			]]>
+	</insert>
+	
+	<insert id="insertProduct" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="returnId">
+			<![CDATA[
+			INSERT INTO ISY_PRODUCT 
+				( PRODUCT_NAME
+				  , PRODUCT_CODE
+				  , STANDARD
+				  , UNIT
+				  , PRODUCT_IMG
+				  , DIVN
+				  , PK_USER_SEQ
+				  , REGIST_ID
+				  , REGIST_DT
+				  , ETC
+				  , BIZ_API_KEY
+				   )
+			VALUES 
+				( #{productName}
+				  , #{productCode}
+				  , #{standard}
+				  , #{unit}
+				  , #{productImg}
+				  , #{divn}
+				  , #{pkUserSeq}
+				  , #{userId}
+				  , SYSDATE()
+				  , #{etc}
+				  , #{bizApiKey}
+				  )
+				]]>
+		<selectKey keyProperty="returnId" resultType="java.lang.Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
+	</insert>
+	
+	<select id="selectProduct" parameterType="productDto" resultType="productDto">
+			<![CDATA[
+				SELECT
+					PK_PRODUCT_SEQ
+					, PRODUCT_NAME
+					, PRODUCT_CODE
+					, STANDARD
+					, UNIT
+					, PRODUCT_IMG
+					, DIVN
+					, ETC
+					, USE_YN
+					, DEL_YN
+					, REGIST_ID
+					, DATE_FORMAT(REGIST_DT,'%Y-%m-%d %H:%i') AS REGIST_DT
+					, UPDATE_ID
+					, UPDATE_DT
+					, PK_USER_SEQ
+					, BIZ_API_KEY
+				FROM ISY_PRODUCT
+				WHERE 1=1
+				AND DEL_YN = 'N'
+				AND PK_PRODUCT_SEQ = #{pkProductSeq}
+				AND PK_USER_SEQ = #{pkUserSeq}
+			]]>
+	</select>
+	
+	<select id="selectProductList" resultType="productDto">
+			SELECT
+				PK_PRODUCT_SEQ
+				, PRODUCT_NAME
+				, PRODUCT_CODE
+				, STANDARD
+				, UNIT
+				, PRODUCT_IMG
+				, DIVN
+				, ETC
+				, USE_YN
+				, DEL_YN
+				, REGIST_ID
+				, DATE_FORMAT(REGIST_DT,'%Y-%m-%d %H:%i') AS REGIST_DT
+				, UPDATE_ID
+				, UPDATE_DT
+				, PK_USER_SEQ
+			FROM ISY_PRODUCT
+			WHERE 1=1
+			AND DEL_YN = 'N'
+			ORDER BY PK_PRODUCT_SEQ DESC
+	</select>
+	<select id="selectProductDetailList" parameterType="productDto" resultType="productDto">
+			SELECT
+				PK_PRODUCT_SEQ
+				, VALUE
+				, ATTRIBUTE
+				, PK_USER_SEQ
+			FROM isy_product_detail 
+			WHERE PK_USER_SEQ = #{pkUserSeq}
+			AND PK_PRODUCT_SEQ = #{pkProductSeq}
+	</select>
+	
+</mapper>

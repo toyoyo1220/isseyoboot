@@ -1,5 +1,6 @@
 package project.isseyo.product.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,15 +69,49 @@ public class ProductController {
 	 * @return "redirect:/productMain"
 	 * @exception Exception
 	 */
-	@PostMapping("/productCreate")
+	@PostMapping("/productCreate/{divn}")
 	public String productCreate(
 			ProductDto productDto
+			, @PathVariable String divn
+			, HttpServletRequest request
 			, Model model
 		)
 			throws Exception {
-
-		productService.productCreate(productDto);
+		LoginDto loginDto = (LoginDto) request.getSession().getAttribute("loginDto");
+		String[] attribute = productDto.getAttribute().split(",");
+		String[] value =  productDto.getValue().split(",");
 		
+		HashMap<String, Object> productMap = new HashMap<String, Object>();
+		
+		if(divn.equals("insert")) {
+			
+			productMap.put("productName", productDto.getProductName());
+			productMap.put("productCode", productDto.getProductCode());
+			productMap.put("standard", productDto.getStandard());
+			productMap.put("unit", productDto.getUnit());
+			productMap.put("productImg", productDto.getProductImg());
+			productMap.put("divn", productDto.getDivn());
+			productMap.put("etc", productDto.getEtc());
+			productMap.put("registId", loginDto.getUserId());
+			productMap.put("bizApiKey", loginDto.getBizApiKey());
+			productMap.put("pkUserSeq", loginDto.getPkUserSeq());
+			
+			productService.insertProduct(productMap);
+			
+			System.out.println("productMap.get(\"returnId\")================"+productMap.get("returnId"));
+			for (int i = 0; i < value.length; i++) {
+				HashMap<String, Object> productDetailMap = new HashMap<String, Object>();
+				
+				productDetailMap.put("pkProductSeq", productMap.get("returnId"));
+				productDetailMap.put("attribute", attribute[i]);
+				productDetailMap.put("value", value[i]);
+				productDetailMap.put("pkUserSeq", loginDto.getPkUserSeq());
+				
+				productService.insertProductDetail(productDetailMap);
+			}
+		} else {
+			
+		}
 		return "redirect:/productMain";
 	}
 	

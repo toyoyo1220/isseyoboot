@@ -36,7 +36,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
-							<form id="productForm" method="post">
+							<form id="productForm" method="post" th:attr="divn=${divn}">
 								<div class="card-header">
 									<h3 class="card-title">품목 정보</h3>
 								</div>
@@ -127,15 +127,15 @@
 		function rowAdd() {
 			$(".detailDiv").append(
 				"<div class=\"form-group row-count\">" +
-				"<div class=\"row\">" +
-				"<div class=\"col-md-6\">" +
-				"<label for=\"attribute\">속성</label> <input type=\"text\" class=\"form-control\" id=\"attribute\" name=\"attribute\" placeholder=\"속성\" required>" +
-				"</div>" +
-				"<div class=\"col-md-6\">" +
-				"<label for=\"value\">값</label>" +
-				"<input type=\"text\" class=\"form-control\" id=\"value\" name=\"value\" placeholder=\"값\" required>" +
-				"</div>" +
-				"</div>" +
+					"<div class=\"row\">" +
+						"<div class=\"col-md-6\">" +
+							"<label for=\"attribute\">속성</label> <input type=\"text\" class=\"form-control\" id=\"attribute\" name=\"attribute\" placeholder=\"속성\" required>" +
+						"</div>" +
+						"<div class=\"col-md-6\">" +
+							"<label for=\"value\">값</label>" +
+							"<input type=\"text\" class=\"form-control\" id=\"value\" name=\"value\" placeholder=\"값\" required>" +
+						"</div>" +
+					"</div>" +
 				"</div>"
 			);
 		}
@@ -153,7 +153,6 @@
 		}
 		
 		$(function () {
-			
 			$('#productForm').validate({
 				submitHandler: function () {
 					var check = true;
@@ -164,12 +163,11 @@
 						}
 					});
 					if(check){
-						console.log("성공");
 						var form = document.querySelector("#productForm");
-						form.action = 'productCreate';
+						var divn = form.getAttribute("divn");
+						form.action = '/productCreate/'+divn;
 						form.submit();
 					}else{
-						console.log("실패");
 						return false;
 					}
 					

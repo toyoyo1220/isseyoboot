@@ -12,7 +12,7 @@ public interface ProductMapper {
 
 	int insertProduct(HashMap<String, Object> map);
 
-	Object productCreate(ProductDto productDto);
+	ProductDto productCreate(ProductDto productDto);
 
 	List<ProductDto> selectProductList();
 
@@ -25,5 +25,7 @@ public interface ProductMapper {
 	ProductDto productSelect(ProductDto productDto);
 
 	List<ProductDto> selectProductDetailList(ProductDto productDto);
+
+	ProductDto productDetailCreate(ProductDto productDto);
 
 }

@@ -74,7 +74,6 @@ public class ProductService {
 	 * @return 
 	 * 품목 상세 정보를 삽입한다.
 	 * @param hashMap
-	 * @return 
 	 * @return
 	 * @exception
 	 */
@@ -102,5 +101,16 @@ public class ProductService {
 	 */
 	public List<ProductDto> selectProductDetailList(ProductDto productDto) {
 		return productMapper.selectProductDetailList(productDto);
+	}
+	
+	/**
+	 * @return 
+	 * 품목 상세 정보를 삽입한다.
+	 * @param ProductDto
+	 * @return
+	 * @exception
+	 */
+	public ProductDto productDetailCreate(ProductDto productDto) {
+		return productMapper.productDetailCreate(productDto);
 	}
 }

@@ -62,7 +62,7 @@
 				  , #{productImg}
 				  , #{divn}
 				  , #{pkUserSeq}
-				  , #{userId}
+				  , #{registId}
 				  , SYSDATE()
 				  , #{etc}
 				  , #{bizApiKey}

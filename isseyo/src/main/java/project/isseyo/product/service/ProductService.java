@@ -102,15 +102,40 @@ public class ProductService {
 	public List<ProductDto> selectProductDetailList(ProductDto productDto) {
 		return productMapper.selectProductDetailList(productDto);
 	}
-	
 	/**
 	 * @return 
-	 * 품목 상세 정보를 삽입한다.
-	 * @param ProductDto
+	 * 품목 상세 정보를 갱신한다.
+	 * @param hashMap
 	 * @return
 	 * @exception
 	 */
-	public ProductDto productDetailCreate(ProductDto productDto) {
-		return productMapper.productDetailCreate(productDto);
+	public void updateProduct(HashMap<String, Object> productMap) {
+		productMapper.updateProduct(productMap);
+		return;
+		
+	}
+	/**
+	 * @return 
+	 * 품목 상세 정보를 삭제한다.
+	 * @param int pkProductSeq
+	 * @return
+	 * @exception
+	 */
+	public void deleteProductDetail(int pkProductSeq) {
+		// TODO Auto-generated method stub
+		productMapper.deleteProductDetail(pkProductSeq);
+		return;
+	}
+	/**
+	 * @return 
+	 * 품목 정보를 삭제한다.
+	 * @param int pkProductSeq
+	 * @return
+	 * @exception
+	 */
+	public void deleteProduct(int pkProductSeq) {
+		// TODO Auto-generated method stub
+		productMapper.deleteProduct(pkProductSeq);
+		return;
 	}
 }

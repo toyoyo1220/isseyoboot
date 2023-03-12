@@ -74,6 +74,41 @@
 		
 	</insert>
 	
+	
+	<update id="updateProduct" parameterType="java.util.HashMap">
+			<![CDATA[
+				UPDATE ISY_PRODUCT SET
+					PRODUCT_NAME = #{productName}
+					  , PRODUCT_CODE = #{productCode}
+					  , STANDARD = #{standard}
+					  , UNIT = #{unit}
+					  , PRODUCT_IMG = #{productImg}
+					  , DIVN = #{divn}
+					  , PK_USER_SEQ = #{pkUserSeq}
+					  , UPDATE_ID = #{updateId}
+					  , UPDATE_DT = SYSDATE()
+					  , ETC = #{etc}
+					  , BIZ_API_KEY = #{bizApiKey}
+				WHERE PK_PRODUCT_SEQ = #{pkProductSeq}
+			]]>
+	</update>
+	
+	<update id="deleteProduct" parameterType="java.util.HashMap">
+			<![CDATA[
+				UPDATE ISY_PRODUCT SET
+					DEL_YN = 'Y'
+				WHERE PK_PRODUCT_SEQ = #{pkProductSeq}
+			]]>
+	</update>
+	
+	<delete id="deleteProductDetail" parameterType="java.util.HashMap">
+			<![CDATA[
+				DELETE 
+				FROM ISY_PRODUCT_DETAIL
+				WHERE PK_PRODUCT_SEQ = #{pkProductSeq}
+			]]>
+	</delete>
+	
 	<select id="selectProduct" parameterType="productDto" resultType="productDto">
 			<![CDATA[
 				SELECT

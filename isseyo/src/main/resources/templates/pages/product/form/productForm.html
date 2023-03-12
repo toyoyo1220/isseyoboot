@@ -37,6 +37,9 @@
 					<div class="col-md-12">
 						<div class="card">
 							<form id="productForm" method="post" th:attr="divn=${divn}">
+								<input th:if="${divn == 'update'}" type="hidden" class="form-control"
+											th:value="${result?.pkProductSeq}" id="pkProductSeq" name="pkProductSeq"
+											placeholder="품목명" >
 								<div class="card-header">
 									<h3 class="card-title">품목 정보</h3>
 								</div>

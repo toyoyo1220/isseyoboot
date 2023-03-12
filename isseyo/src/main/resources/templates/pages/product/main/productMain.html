@@ -42,7 +42,7 @@
 										class="btn btn-primary">등록</button>
 									<button onclick="productHandle('update')" type="button"
 										class="btn btn-info">수정</button>
-									<button onclick="location.href='/productForm'" type="button"
+									<button onclick="productHandle('delete')" type="button"
 										class="btn btn-danger">삭제</button>
 									<button type="button" class="btn btn-success" data-toggle="modal"
 										data-target="#modal-success">
@@ -89,57 +89,9 @@
 											<td th:text="${item.registDt}">
 											</td>
 										</tr>
-										<!--<c:choose>
-										<c:when test="${empty resultList}">
-											<tr>
-												<td style="text-align: center;" colspan="9">목록이 존재 하지
-													않습니다.</td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="i" items="${resultList}" varStatus="istatus">
-												<tr data-widget="expandable-table" aria-expanded="false">
-													<td check="N" row="<c:out value="${istatus.count}" />"><c:out value="${istatus.count}" /> <input
-														name="pkProductSeq" type="hidden"
-														value="${i.pkProductSeq}" /></td>
-													<td><c:out value="${i.productName}" /></td>
-													<td><c:out value="${i.productCode}" /></td>
-													<td><c:out value="${i.standard}" /></td>
-													<td><c:out value="${i.unit}" /></td>
-													<td><c:out value="${i.productImg}" /></td>
-													<td><c:out value="${i.divn}" /></td>
-													<td><c:out value="${i.etc}" /></td>
-													<td><c:out value="${i.registDt}" /></td>
-												</tr>
-												<tr class="expandable-body d-none">
-													<td colspan="9">
-														<p style="display: none;">품목 상세 정보</p>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>-->
-
 									</tbody>
 								</table>
 							</div>
-							<!--<form:form commandName="searchVO" id="listForm" name="listForm"
-							method="post">
-							<form:hidden path="pageIndex" />
-							<div class="card-footer clearfix">
-								<ul class="pagination pagination-sm m-0 float-right">
-									<li class="page-item"><a class="page-link"
-										href="javascript:paging(1);">«</a></li>
-									<c:forEach var="i" begin="1"
-										end="${paginationInfo.totalPageCount}" varStatus="istatus">
-										<li class="page-item"><a class="page-link"
-											href="javascript:paging(${i});"><c:out value="${i}" /></a></li>
-									</c:forEach>
-									<li class="page-item"><a class="page-link"
-										href="javascript:paging(${paginationInfo.lastPageNoOnPageList});">»</a></li>
-								</ul>
-							</div>
-						</form:form>-->
 							<!-- /.card-footer -->
 						</div>
 						<!-- /.card -->
@@ -183,15 +135,11 @@
 	</div>
 	<input id="selectId" value=""/>
 	<script type="text/javaScript" language="javascript" defer="defer">
-	function paging(pageNo) {
-		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/productMain'/>";
-		document.listForm.submit();
-	}
+		
 	function productHandle(divn){
 		if(divn == "insert"){
 			location.href='/productForm/0';
-		}else{
+		}else if(divn == "update"){
 			if($("#selectId").val() == null || $("#selectId").val() == ''){
 				Swal.fire({
 				  icon: 'error',
@@ -200,6 +148,16 @@
 				})
 			}else{
 				location.href="/productForm/"+$("#selectId").val()+"";
+			}
+		}else{
+			if($("#selectId").val() == null || $("#selectId").val() == ''){
+				Swal.fire({
+				  icon: 'error',
+				  title: '항목 선택',
+				  text: 'Something went wrong!'
+				})
+			}else{
+				location.href="/productDelete/"+$("#selectId").val()+"";
 			}
 		}
 	}

@@ -62,10 +62,23 @@ public class ProductController {
 		return mv;
     }
 	
+	@GetMapping("/productDelete/{pkProductSeq}")
+    public String productDelete(
+    		@PathVariable int pkProductSeq
+    		, HttpServletRequest request
+    		, Model model
+    		) {
+		
+		productService.deleteProduct(pkProductSeq);
+		productService.deleteProductDetail(pkProductSeq);
+		
+		return "redirect:/productMain";
+    }
+	
 	/**
 	 * 품목을 등록 한다.
-	 * @param productVO - 등록할 정보가 담긴 VO
-	 * @param status
+	 * @param productDto
+	 * @param divn
 	 * @return "redirect:/productMain"
 	 * @exception Exception
 	 */
@@ -82,20 +95,19 @@ public class ProductController {
 		String[] value =  productDto.getValue().split(",");
 		
 		HashMap<String, Object> productMap = new HashMap<String, Object>();
+		productMap.put("productName", productDto.getProductName());
+		productMap.put("productCode", productDto.getProductCode());
+		productMap.put("standard", productDto.getStandard());
+		productMap.put("unit", productDto.getUnit());
+		productMap.put("productImg", productDto.getProductImg());
+		productMap.put("divn", productDto.getDivn());
+		productMap.put("etc", productDto.getEtc());
+		productMap.put("bizApiKey", loginDto.getBizApiKey());
+		productMap.put("pkUserSeq", loginDto.getPkUserSeq());
 		
 		if(divn.equals("insert")) {
 			
-			productMap.put("productName", productDto.getProductName());
-			productMap.put("productCode", productDto.getProductCode());
-			productMap.put("standard", productDto.getStandard());
-			productMap.put("unit", productDto.getUnit());
-			productMap.put("productImg", productDto.getProductImg());
-			productMap.put("divn", productDto.getDivn());
-			productMap.put("etc", productDto.getEtc());
 			productMap.put("registId", loginDto.getUserId());
-			productMap.put("bizApiKey", loginDto.getBizApiKey());
-			productMap.put("pkUserSeq", loginDto.getPkUserSeq());
-			
 			productService.insertProduct(productMap);
 			
 			System.out.println("productMap.get(\"returnId\")================"+productMap.get("returnId"));
@@ -111,6 +123,22 @@ public class ProductController {
 			}
 		} else {
 			
+			productMap.put("pkProductSeq", productDto.getPkProductSeq());
+			productMap.put("updateId", loginDto.getUserId());
+			
+			productService.updateProduct(productMap);
+			productService.deleteProductDetail(productDto.getPkProductSeq());
+			
+			for (int i = 0; i < value.length; i++) {
+				HashMap<String, Object> productDetailMap = new HashMap<String, Object>();
+				
+				productDetailMap.put("pkProductSeq", productDto.getPkProductSeq());
+				productDetailMap.put("attribute", attribute[i]);
+				productDetailMap.put("value", value[i]);
+				productDetailMap.put("pkUserSeq", loginDto.getPkUserSeq());
+				
+				productService.insertProductDetail(productDetailMap);
+			}
 		}
 		return "redirect:/productMain";
 	}

@@ -28,4 +28,10 @@ public interface ProductMapper {
 
 	ProductDto productDetailCreate(ProductDto productDto);
 
+	void updateProduct(HashMap<String, Object> productMap);
+
+	void deleteProductDetail(int pkProductSeq);
+
+	void deleteProduct(int pkProductSeq);
+
 }

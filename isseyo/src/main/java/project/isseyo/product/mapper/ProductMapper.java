@@ -14,7 +14,7 @@ public interface ProductMapper {
 
 	ProductDto productCreate(ProductDto productDto);
 
-	List<ProductDto> selectProductList();
+	List<ProductDto> selectProductList(ProductDto productDto);
 
 	int selectProductListTotCnt();
 

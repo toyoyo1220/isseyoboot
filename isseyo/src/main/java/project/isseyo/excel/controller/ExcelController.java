@@ -92,7 +92,7 @@ public class ExcelController {
 					
 				}
 				productMap.put("bizApiKey", loginDto.getBizApiKey());
-				productMap.put("userId", "root");
+				productMap.put("registId", loginDto.getUserId());
 				productMap.put("pkUserSeq", loginDto.getPkUserSeq());
 				productService.insertProduct(productMap);
 				System.out.println("returnId====="+productMap.get("returnId"));

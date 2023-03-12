@@ -11,4 +11,8 @@ public interface LoginMapper {
 
 	LoginDto selectUser(LoginDto loginDto);
 
+	void updateUser(LoginDto loginDto);
+
+	LoginDto apiCheack(String bizApiKey);
+
 }

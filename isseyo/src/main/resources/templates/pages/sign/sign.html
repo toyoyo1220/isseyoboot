@@ -13,53 +13,60 @@
 	<!-- /.login-logo -->
 	<div class="card">
 		<div class="card-body">
-			<form id="signForm" th:object=${loginDto} th:action="@{/signUp}" method="post">
+			<form id="signForm" th:object=${loginDto} method="post" th:attr="divn=${divn}">
+				<input th:if="${divn == 'update'}" type="hidden" name="pkUserSeq" th:value="${result?.pkUserSeq}"/>
 				<div class="form-group">
 					<label for="userId">아이디</label> <input type="id"
 						class="form-control" id="userId" name="userId"
-						placeholder="아이디" required>
+						placeholder="아이디" th:value="${result?.userId}" required>
 				</div>
 				<div class="form-group">
 					<label for="password">비밀번호</label> <input type="password"
-						class="form-control" id="password" name="password" placeholder="비밀번호"
+						class="form-control"  id="password" name="password" placeholder="비밀번호"
 						required>
 				</div>
 				<div class="form-group">
 					<label for="email">이메일</label> <input type="email"
 						class="form-control" id="bizEmail" name="bizEmail"
-						placeholder="이메일" required>
+						th:value="${result?.bizEmail}" placeholder="이메일" required>
 				</div>
 				<div class="form-group">
 					<label for="userNm">이름</label> <input type="text"
 						class="form-control" id="userNm" name="userNm"
-						placeholder="이름" required>
+						th:value="${result?.userNm}" placeholder="이름" required>
 				</div>
 				<div class="form-group">
 					<label for="bizNum">사업자 번호</label> <input type="text"
 						class="form-control" id="bizNum" name="bizNum"
-						placeholder="사업자번호" required>
+						th:value="${result?.bizNum}" placeholder="사업자번호" required>
 				</div>
 				<div class="form-group">
 					<label for="bizNm">회사명</label> <input type="text"
 						class="form-control" id="bizNm" name="bizNm"
-						placeholder="회사명" required>
+						th:value="${result?.bizNm}" placeholder="회사명" required>
 				</div>
 				<div class="form-group">
 					<label for="bizType">업태</label> <input type="text"
 						class="form-control" id="bizType" name="bizType"
-						placeholder="업태" required>
+						th:value="${result?.userId}" placeholder="업태" required>
 				</div>
 				<div class="form-group">
 					<label for="bizItem">업종</label> <input type="text"
 						class="form-control" id="bizItem" name="bizItem"
-						placeholder="업종" required>
+						th:value="${result?.bizItem}" placeholder="업종" required>
 				</div>
 				<div class="form-group">
 					<label for="bizTel">전화번호</label> <input type="text"
 						class="form-control" id="bizTel" name="bizTel"
-						placeholder="전화번호" required>
+						th:value="${result?.bizTel}" placeholder="전화번호" required>
 				</div>
-				<button type="submit" class="btn btn-primary">완료</button>
+				<div th:if="${divn == 'update'}" class="form-group">
+					<label for="bizTel">API Key</label> <input type="text"
+						class="form-control" id="bizApiKey" name="bizApiKey"
+						th:value="${result?.bizApiKey}" placeholder="API Key" readonly>
+				</div>
+				<button th:if="${divn == 'insert'}" type="submit" class="btn btn-primary">완료</button>
+				<button th:if="${divn == 'update'}" type="submit" class="btn btn-info">수정</button>
 			</form>
 		</div>
 		<!-- /.login-card-body -->
@@ -76,7 +83,8 @@
 $('#signForm').validate({
 	submitHandler : function() {
 		var form = document.querySelector("#signForm");
-		form.action = '/signUp';
+		var divn = form.getAttribute("divn");
+		form.action = '/signUp/'+divn;
 		form.submit();
 	},
 	rules : {
@@ -109,7 +117,6 @@ $('#signForm').validate({
 		bizTel : {
 			required : true
 		}
-		
 	},
 	messages : {
 		userId : {

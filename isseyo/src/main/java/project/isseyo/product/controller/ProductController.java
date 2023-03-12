@@ -23,9 +23,11 @@ public class ProductController {
     private ProductService productService;
 	
 	@GetMapping("/productMain")
-    public ModelAndView productMain() {
-        
-		List<ProductDto> productList = productService.selectProductList();
+    public ModelAndView productMain(HttpServletRequest request) {
+		LoginDto loginDto = (LoginDto) request.getSession().getAttribute("loginDto");
+		ProductDto productDto = new ProductDto();
+		productDto.setPkUserSeq(loginDto.getPkUserSeq());
+		List<ProductDto> productList = productService.selectProductList(productDto);
 		System.out.println(productList);
 		ModelAndView mv = new ModelAndView("pages/product/main/productMain"); 
 		mv.addObject("resultList", productList);

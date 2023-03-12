@@ -46,8 +46,8 @@ public class ProductService {
 	 * @return List<?>
 	 * @exception
 	 */
-	public List<ProductDto> selectProductList() {
-		return productMapper.selectProductList();
+	public List<ProductDto> selectProductList(ProductDto productDto) {
+		return productMapper.selectProductList(productDto);
 	}
 	
 	/**

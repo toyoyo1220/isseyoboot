@@ -14,18 +14,21 @@
 		<!-- Right navbar links -->
 		<ul class="navbar-nav ml-auto">
 			<!-- Notifications Dropdown Menu -->
+			<li class="nav-item"><a th:if="${session.loginDto != null}" class="nav-link"
+					th:utext="${session.loginDto.userId +' 님 환영 합니다.'}" href="#" role="button">
+					<span></span>
+				</a></li>
+			<li class="nav-item"><a th:if="${session.loginDto != null}" th:text="로그아웃" class="nav-link" href="/logout" role="button">
+				</a>
+			</li>
+			<li class="nav-item"><a th:if="${session.loginDto != null}" th:text="마이페이지" class="nav-link" href="/sign/update" role="button"><i class="fas fa-sliders-h"></i>
+				</a>
+			</li>
 			<li class="nav-item"><a class="nav-link" data-widget="fullscreen" href="#" role="button"> <i
 						class="fas fa-expand-arrows-alt"></i>
 				</a></li>
-			<li class="nav-item"><a class="nav-link" 
-					href="logout" role="button"><i class="fas fa-long-arrow-alt-right"></i>
-				</a>
-			</li>
-			<li class="nav-item"><a class="nav-link" 
-					href="/sign/update" role="button"><i class="fas fa-sliders-h"></i>
-				</a>
-			</li>	
-				
+
+
 		</ul>
 	</nav>
 	<!-- /.navbar -->

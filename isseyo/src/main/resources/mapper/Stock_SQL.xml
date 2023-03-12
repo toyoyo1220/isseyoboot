@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.isseyo.stock.mapper.StockMapper">
+
+    <select id="findAllByStock"  resultType="stockDto">
+        select distinct
+        PK_PRODUCT_SEQ as pkProductSeq,
+        PRODUCT_NAME as productName,
+        PRODUCT_CODE as productCode,
+        STANDARD as standard,
+        UNIT as unit,
+        PRODUCT_IMG as productImg,
+        DIVN as divn,
+        REGIST_DT as registDt,
+        STOCK as stock,
+        ETC as etc
+        from isy_stock
+        where DEL_YN = 'N'
+        order by PK_PRODUCT_SEQ
+    </select>
+    <insert id="saveStock" parameterType="stockDto">
+        insert into isy_stock(
+            PRODUCT_NAME,
+            PRODUCT_CODE,
+            STANDARD,
+            UNIT,
+            PRODUCT_IMG,
+            DIVN,
+            STOCK,
+            ETC,
+            REGIST_DT,
+            DEL_YN,
+            REGIST_ID
+
+        )
+            values (
+            #{productName},
+            #{productCode},
+            #{standard},
+            #{unit},
+            #{productImg},
+            #{divn},
+            #{stock},
+            #{etc},
+            now(),
+            'N',
+            'User'
+        )
+    </insert>
+    <select id="findById" resultType="project.isseyo.stock.dto.StockDto">
+        select
+            PK_PRODUCT_SEQ as pkProductSeq,
+            PRODUCT_NAME as productName,
+            PRODUCT_CODE as productCode,
+            STANDARD as standard,
+            UNIT as unit,
+            PRODUCT_IMG as productImg,
+            DIVN as divn,
+            DEL_YN as delYn,
+            REGIST_DT as registDt,
+            STOCK as stock,
+            ETC as etc,
+            REGIST_ID as userId
+
+        from isy_stock
+        where
+            PK_PRODUCT_SEQ = #{id}
+        and
+            DEL_YN = 'N';
+
+    </select>
+
+    <update id="updateById" parameterType="stockDto">
+        update isy_stock
+        set
+            PRODUCT_NAME = #{productName},
+            PRODUCT_CODE = #{productCode},
+            STANDARD = #{standard},
+            UNIT = #{unit},
+            PRODUCT_IMG = #{productImg},
+            DIVN = #{divn},
+            STOCK = #{stock},
+            ETC = #{etc}
+        where PK_PRODUCT_SEQ = #{pkProductSeq}
+    </update>
+    <update id="deleteById" parameterType="int">
+        update isy_stock
+        set DEL_YN = 'Y'
+        where PK_PRODUCT_SEQ = #{id}
+    </update>
+
+</mapper>

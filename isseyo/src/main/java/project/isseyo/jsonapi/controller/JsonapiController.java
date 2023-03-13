@@ -23,6 +23,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import project.isseyo.error.ErrorHandler;
 import project.isseyo.login.dto.LoginDto;
 import project.isseyo.login.service.LoginService;
+import project.isseyo.order.dto.OrderDto;
+import project.isseyo.order.service.OrderService;
+import project.isseyo.pay.dto.PayDto;
+import project.isseyo.pay.service.PayService;
 import project.isseyo.product.dto.ProductDto;
 import project.isseyo.product.service.ProductService;
 @RestController
@@ -34,6 +38,12 @@ public class JsonapiController {
 	
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private PayService payService;
 
 	@GetMapping(value = "get/product/{bizApiKey}/{pkProductSeq}")
 	public ArrayList<HashMap<String, Object>> selectProduct(
@@ -220,7 +230,7 @@ public class JsonapiController {
 			) {
 		
 			LoginDto loginDto = null;
-			ProductDto productDto = new ProductDto();
+			OrderDto orderDto = new OrderDto();
 			ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 			HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 			
@@ -228,12 +238,12 @@ public class JsonapiController {
 			System.out.println("bizApiKey======="+bizApiKey);
 			loginDto = loginService.apiCheack(bizApiKey);
 			System.out.println("loginDto======="+loginDto);
-			productDto.setPkUserSeq(loginDto.getPkUserSeq());
-			productDto.setPkProductSeq(pkOrderSeq);
-			productDto = productService.selectProduct(productDto);
-			System.out.println(productDto);
+			orderDto.setPkUserSeq(loginDto.getPkUserSeq());
+			orderDto.setPkProductSeq(pkOrderSeq);
+			orderDto = orderService.selectOrder(orderDto);
+			System.out.println("orderDto======="+orderDto);
 			
-			reponseMap.put("result", productDto);
+			reponseMap.put("result", orderDto);
 			reponseMap.put("message", "조회 성공");
 			reponseMap.put("state", "200");
 			
@@ -243,7 +253,6 @@ public class JsonapiController {
 				response = ErrorHandler.serverError("500", "회원 정보가 존재하지 않습니다.");
 		}
 		
-		
 		return response;
 	}
 	
@@ -252,7 +261,7 @@ public class JsonapiController {
 			@PathVariable String bizApiKey
 			) {
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		OrderDto orderDto = new OrderDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
@@ -260,8 +269,8 @@ public class JsonapiController {
 		
 			System.out.println("bizApiKey======="+bizApiKey);
 			loginDto = loginService.apiCheack(bizApiKey);
-			productDto.setPkUserSeq(loginDto.getPkUserSeq());
-			List<ProductDto> resultList = productService.selectProductList(productDto);
+			orderDto.setPkUserSeq(loginDto.getPkUserSeq());
+			List<OrderDto> resultList = orderService.selectOrderList(orderDto);
 			
 			reponseMap.put("result", resultList);
 			reponseMap.put("message", "조회 성공");
@@ -282,7 +291,7 @@ public class JsonapiController {
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		OrderDto orderDto = new OrderDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		try {
@@ -293,16 +302,7 @@ public class JsonapiController {
 			hashMap.put("pkUserSeq", loginDto.getPkUserSeq());
 			hashMap.put("registId", loginDto.getUserId());
 			hashMap.put("bizApiKey", loginDto.getBizApiKey());
-			productService.insertProduct(hashMap);
-			ArrayList<HashMap<String, Object>> data = null;
-			data = (ArrayList<HashMap<String, Object>>) hashMap.get("data");
-			if (data != null) {
-				for (HashMap<String, Object> hashMap2 : data) {
-					hashMap2.put("pkProductSeq", hashMap.get("returnId"));
-					hashMap2.put("pkUserSeq", loginDto.getPkUserSeq());
-					productService.insertProductDetail(hashMap2);
-				}
-			}
+			orderService.insertOrder(hashMap);
 		}
 		reponseMap.put("result", resultList);
 		reponseMap.put("message", "삽입 성공");
@@ -324,7 +324,7 @@ public class JsonapiController {
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		OrderDto orderDto = new OrderDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
@@ -336,18 +336,7 @@ public class JsonapiController {
 				hashMap.put("pkUserSeq", loginDto.getPkUserSeq());
 				hashMap.put("registId", loginDto.getUserId());
 				hashMap.put("bizApiKey", loginDto.getBizApiKey());
-				productService.updateProduct(hashMap);
-				int pkProductSeq = Integer.parseInt((String) hashMap.get("pkProductSeq"));
-				productService.deleteProductDetail(pkProductSeq);
-				ArrayList<HashMap<String, Object>> data = null;
-				data = (ArrayList<HashMap<String, Object>>) hashMap.get("data");
-				if (data != null) {
-					for (HashMap<String, Object> hashMap2 : data) {
-						hashMap2.put("pkProductSeq", hashMap.get("pkProductSeq"));
-						hashMap2.put("pkUserSeq", loginDto.getPkUserSeq());
-						productService.insertProductDetail(hashMap2);
-					}
-				}
+				orderService.updateOrder(hashMap);
 			}
 			reponseMap.put("result", resultList);
 			reponseMap.put("message", "수정 성공");
@@ -362,22 +351,21 @@ public class JsonapiController {
 		return response;
 	}
 	
-	@DeleteMapping(value = "delete/order/{bizApiKey}/{pkProductSeq}")
+	@DeleteMapping(value = "delete/order/{bizApiKey}/{pkOrderSeq}")
 	public ArrayList<HashMap<String, Object>> orderDelete(
 			@PathVariable String bizApiKey
-			, @PathVariable int pkProductSeq
+			, @PathVariable int pkOrderSeq
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		OrderDto orderDto = new OrderDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
 		try {
 			loginDto = loginService.apiCheack(bizApiKey);
 			System.out.println("bizApiKey======="+bizApiKey);
-			productService.deleteProduct(pkProductSeq);
-			productService.deleteProductDetail(pkProductSeq);
+			orderService.deleteOrder(pkOrderSeq);
 		
 			reponseMap.put("result", "");
 			reponseMap.put("message", "삭제 성공");
@@ -390,14 +378,14 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	@GetMapping(value = "get/pay/{bizApiKey}/{pkProductSeq}")
+	@GetMapping(value = "get/pay/{bizApiKey}/{pkPaySeq}")
 	public ArrayList<HashMap<String, Object>> selectPay(
 			@PathVariable String bizApiKey
-			, @PathVariable int pkProductSeq
+			, @PathVariable int pkPaySeq
 			) {
 		
 			LoginDto loginDto = null;
-			ProductDto productDto = new ProductDto();
+			PayDto payDto = new PayDto();
 			ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 			HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 			
@@ -405,12 +393,12 @@ public class JsonapiController {
 			System.out.println("bizApiKey======="+bizApiKey);
 			loginDto = loginService.apiCheack(bizApiKey);
 			System.out.println("loginDto======="+loginDto);
-			productDto.setPkUserSeq(loginDto.getPkUserSeq());
-			productDto.setPkProductSeq(pkProductSeq);
-			productDto = productService.selectProduct(productDto);
-			System.out.println(productDto);
+			payDto.setPkUserSeq(loginDto.getPkUserSeq());
+			payDto.setPkPaySeq(pkPaySeq);
+			payDto = payService.selectPay(payDto);
+			System.out.println(payDto);
 			
-			reponseMap.put("result", productDto);
+			reponseMap.put("result", payDto);
 			reponseMap.put("message", "조회 성공");
 			reponseMap.put("state", "200");
 			
@@ -429,7 +417,7 @@ public class JsonapiController {
 			@PathVariable String bizApiKey
 			) {
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		PayDto payDto = new PayDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
@@ -437,8 +425,8 @@ public class JsonapiController {
 		
 			System.out.println("bizApiKey======="+bizApiKey);
 			loginDto = loginService.apiCheack(bizApiKey);
-			productDto.setPkUserSeq(loginDto.getPkUserSeq());
-			List<ProductDto> resultList = productService.selectProductList(productDto);
+			payDto.setPkUserSeq(loginDto.getPkUserSeq());
+			List<PayDto> resultList = payService.selectPayList(payDto);
 			
 			reponseMap.put("result", resultList);
 			reponseMap.put("message", "조회 성공");
@@ -459,7 +447,7 @@ public class JsonapiController {
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		PayDto payDto = new PayDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		try {
@@ -470,16 +458,7 @@ public class JsonapiController {
 			hashMap.put("pkUserSeq", loginDto.getPkUserSeq());
 			hashMap.put("registId", loginDto.getUserId());
 			hashMap.put("bizApiKey", loginDto.getBizApiKey());
-			productService.insertProduct(hashMap);
-			ArrayList<HashMap<String, Object>> data = null;
-			data = (ArrayList<HashMap<String, Object>>) hashMap.get("data");
-			if (data != null) {
-				for (HashMap<String, Object> hashMap2 : data) {
-					hashMap2.put("pkProductSeq", hashMap.get("returnId"));
-					hashMap2.put("pkUserSeq", loginDto.getPkUserSeq());
-					productService.insertProductDetail(hashMap2);
-				}
-			}
+			payService.insertPay(hashMap);
 		}
 		reponseMap.put("result", resultList);
 		reponseMap.put("message", "삽입 성공");
@@ -501,7 +480,7 @@ public class JsonapiController {
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		PayDto payDto = new PayDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
@@ -513,18 +492,7 @@ public class JsonapiController {
 				hashMap.put("pkUserSeq", loginDto.getPkUserSeq());
 				hashMap.put("registId", loginDto.getUserId());
 				hashMap.put("bizApiKey", loginDto.getBizApiKey());
-				productService.updateProduct(hashMap);
-				int pkProductSeq = Integer.parseInt((String) hashMap.get("pkProductSeq"));
-				productService.deleteProductDetail(pkProductSeq);
-				ArrayList<HashMap<String, Object>> data = null;
-				data = (ArrayList<HashMap<String, Object>>) hashMap.get("data");
-				if (data != null) {
-					for (HashMap<String, Object> hashMap2 : data) {
-						hashMap2.put("pkProductSeq", hashMap.get("pkProductSeq"));
-						hashMap2.put("pkUserSeq", loginDto.getPkUserSeq());
-						productService.insertProductDetail(hashMap2);
-					}
-				}
+				payService.updatePay(hashMap);
 			}
 			reponseMap.put("result", resultList);
 			reponseMap.put("message", "수정 성공");
@@ -539,22 +507,21 @@ public class JsonapiController {
 		return response;
 	}
 	
-	@DeleteMapping(value = "delete/pay/{bizApiKey}/{pkProductSeq}")
+	@DeleteMapping(value = "delete/pay/{bizApiKey}/{pkPaySeq}")
 	public ArrayList<HashMap<String, Object>> payDelete(
 			@PathVariable String bizApiKey
-			, @PathVariable int pkProductSeq
+			, @PathVariable int pkPaySeq
 			, HttpServletRequest req) {
 
 		LoginDto loginDto = null;
-		ProductDto productDto = new ProductDto();
+		PayDto payDto = new PayDto();
 		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> reponseMap = new HashMap<String, Object>();
 		
 		try {
 			loginDto = loginService.apiCheack(bizApiKey);
 			System.out.println("bizApiKey======="+bizApiKey);
-			productService.deleteProduct(pkProductSeq);
-			productService.deleteProductDetail(pkProductSeq);
+			payService.deletePay(pkPaySeq);
 		
 			reponseMap.put("result", "");
 			reponseMap.put("message", "삭제 성공");

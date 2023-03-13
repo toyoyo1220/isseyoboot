@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="project.isseyo.order.mapper.OrderMapper">	<!-- xml파일을 사용할 mapper가 있는 경로 -->
+	
+	<insert id="insertOrder" parameterType="java.util.HashMap">
+			<![CDATA[
+			INSERT INTO ISY_ORDER 
+				( ORDER_CODE
+				, ORDER_NAME
+				, ORDER_STATE
+				, REGIST_ID
+				, REGIST_DT
+				, PK_PRODUCT_SEQ
+				, PK_USER_SEQ
+				)
+			VALUES 
+				( #{orderCode}
+				  , #{orderName}
+				  , #{orderState}
+				  , #{registId}
+				  , SYSDATE()
+				  , #{pkProductSeq}
+				  , #{pkUserSeq}
+				  )
+				]]>
+	</insert>
+	
+	<update id="updateOrder" parameterType="java.util.HashMap">
+			<![CDATA[
+				UPDATE ISY_ORDER SET
+					ORDER_CODE = #{orderCode}
+					  , ORDER_NAME = #{orderName}
+					  , ORDER_STATE = #{orderState}
+				WHERE PK_ORDER_SEQ = #{pkOrderSeq}
+			]]>
+	</update>
+	
+	<delete id="deleteOrder" parameterType="java.util.HashMap">
+			<![CDATA[
+				DELETE
+				FROM ISY_ORDER
+				WHERE PK_ORDER_SEQ = #{pkOrderSeq}
+			]]>
+	</delete>
+	
+	<select id="selectOrder" parameterType="orderDto" resultType="orderDto">
+			<![CDATA[
+				SELECT
+					PK_ORDER_SEQ
+					, ORDER_CODE
+					, ORDER_NAME
+					, ORDER_STATE
+					, REGIST_ID
+					, REGIST_DT
+					, PK_PRODUCT_SEQ
+					, PK_USER_SEQ
+				FROM ISY_ORDER
+				WHERE 1=1
+				AND PK_PRODUCT_SEQ = #{pkProductSeq}
+				AND PK_USER_SEQ = #{pkUserSeq}
+			]]>
+	</select>
+	
+	<select id="selectOrderList" parameterType="orderDto" resultType="orderDto">
+			SELECT
+				PK_ORDER_SEQ
+				, ORDER_CODE
+				, ORDER_NAME
+				, ORDER_STATE
+				, REGIST_ID
+				, REGIST_DT
+				, PK_PRODUCT_SEQ
+				, PK_USER_SEQ
+			FROM ISY_ORDER
+			WHERE 1=1
+			AND PK_USER_SEQ = #{pkUserSeq}
+			ORDER BY PK_ORDER_SEQ DESC
+	</select>
+	
+</mapper>

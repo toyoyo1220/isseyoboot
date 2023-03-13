@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="project.isseyo.pay.mapper.PayMapper">	<!-- xml파일을 사용할 mapper가 있는 경로 -->
+  	
+	
+	<insert id="insertPay" parameterType="java.util.HashMap" >
+			<![CDATA[
+			INSERT INTO ISY_PAY 
+				( PAY_CODE
+				, PAY_METHOD
+				, PAY_STATE
+				, REGIST_ID
+				, REGIST_DT
+				, PK_PRODUCT_SEQ
+				, PK_USER_SEQ
+				   )
+			VALUES 
+				( #{payCode}
+				  , #{payMethod}
+				  , #{payState}
+				  , #{registId}
+				  , SYSDATE()
+				  , #{pkProductSeq}
+				  , #{pkUserSeq}
+				  )
+				]]>
+	</insert>
+	
+	
+	<update id="updatePay" parameterType="java.util.HashMap">
+			<![CDATA[
+				UPDATE ISY_PAY SET
+					PAY_CODE = #{payCode}
+				  , PAY_METHOD = #{payMethod}
+				  , PAY_STATE = #{payState}
+				WHERE PK_PAY_SEQ = #{pkPaySeq}
+			]]>
+	</update>
+	
+	<delete id="deletePay" parameterType="java.util.HashMap">
+			<![CDATA[
+				DELETE
+				FROM ISY_PAY
+				WHERE PK_PAY_SEQ = #{pkPaySeq}
+			]]>
+	</delete>
+	
+	
+	<select id="selectPay" parameterType="payDto" resultType="payDto">
+			<![CDATA[
+				SELECT
+					PK_PAY_SEQ
+					, PAY_CODE
+					, PAY_METHOD
+					, PAY_STATE
+					, REGIST_ID
+					, REGIST_DT
+					, PK_PRODUCT_SEQ
+					, PK_USER_SEQ
+				FROM ISY_PAY
+				WHERE 1=1
+				AND PK_PAY_SEQ = #{pkPaySeq}
+				AND PK_USER_SEQ = #{pkUserSeq}
+			]]>
+	</select>
+	
+	<select id="selectPayList" parameterType="payDto" resultType="payDto">
+			<![CDATA[
+			SELECT
+				PK_PAY_SEQ
+				, PAY_CODE
+				, PAY_METHOD
+				, PAY_STATE
+				, REGIST_ID
+				, REGIST_DT
+				, PK_PRODUCT_SEQ
+				, PK_USER_SEQ
+			FROM ISY_PAY
+			WHERE 1=1
+			AND PK_USER_SEQ = #{pkUserSeq}
+			ORDER BY PK_PAY_SEQ DESC
+			]]>
+	</select>
+	
+</mapper>

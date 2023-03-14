@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
+
+<th:block layout:fragment="content">
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">API 정의</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">API 정의</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<!-- Small boxes (Stat box) -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">API Sample</h3>
+							</div>
+							<div class="card-body">
+
+
+								<div class="card card-primary card-outline card-outline-tabs">
+									<div class="card-header p-0 border-bottom-0">
+										<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+											<li class="nav-item">
+												<a class="nav-link active" id="custom-tabs-four-home-tab"
+													data-toggle="pill" href="#custom-tabs-four-home" role="tab"
+													aria-controls="custom-tabs-four-home" aria-selected="true">품목</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill"
+													href="#custom-tabs-four-profile" role="tab"
+													aria-controls="custom-tabs-four-profile"
+													aria-selected="false">주문</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="custom-tabs-four-messages-tab"
+													data-toggle="pill" href="#custom-tabs-four-messages" role="tab"
+													aria-controls="custom-tabs-four-messages"
+													aria-selected="false">결제</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body">
+										<div class="tab-content" id="custom-tabs-four-tabContent">
+											<div class="tab-pane fade show active" id="custom-tabs-four-home"
+												role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+												<h4>API 설명</h4>
+												<p>
+													- 회원가입 시 발급한 API Key를 기준으로 실행됩니다.
+													<br>
+													- 품목 관리의 경우 ID 값을 기준으로 insert & update & delete & select 됩니다
+												</p>
+												<h4>Data 정의</h4>
+												<table class="table table-bordered table-hover">
+													<thead>
+														<tr>
+															<th style="width:5%">No.</th>
+															<th>Key</th>
+															<th>설명</th>
+															<th style="width:5%">필수</th>
+															<th>비고</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>pkProductSeq</td>
+															<td>품목 아이디</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>productName</td>
+															<td>품목 명</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>productCode</td>
+															<td>품목 코드</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>standard</td>
+															<td>규격</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>4</td>
+															<td>unit</td>
+															<td>단위</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>5</td>
+															<td>divn</td>
+															<td>구분</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>6</td>
+															<td>etc</td>
+															<td>비고</td>
+															<td>N</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>7</td>
+															<td>data</td>
+															<td>속성 배열</td>
+															<td>Y</td>
+															<td>isseyo에서 지원 하는 기본 정보가 아닌 그외 속성 값을 넣으시면 됩니다. ex) 대분류,
+																소분류, 중분류, 그룹아이디</td>
+														</tr>
+														<tr>
+															<td>8</td>
+															<td>attribute</td>
+															<td>속성</td>
+															<td>Y</td>
+															<td>DTO 또는 VO 에 정의된 이름</td>
+														</tr>
+														<tr>
+															<td>9</td>
+															<td>value</td>
+															<td>값</td>
+															<td>Y</td>
+															<td>해당 DTO 또는 VO의 값</td>
+														</tr>
+
+													</tbody>
+												</table>
+												<h4>Sample</h4>
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td  valign="top">
+<xmp>
+	<?xml version="1.0" encoding="euc-kr"?>
+	<SABANG_RESULT>
+		<HEADER>
+			<SEND_COMPAYNY_ID>dhrwjd83
+			</SEND_COMPAYNY_ID>
+			<SEND_DATE>
+				<![CDATA[20190821]]>
+			</SEND_DATE>
+			<TOTAL_COUNT>2</TOTAL_COUNT>
+		</HEADER>
+		<DATA>
+			<RESULT>SUCCESS</RESULT>
+			<MODE>수정</MODE>
+			<PRODUCT_ID>
+				<![CDATA[100575]]>
+			</PRODUCT_ID>
+		</DATA>
+		<DATA>
+			<RESULT>SUCCESS</RESULT>
+			<MODE>수정</MODE>
+			<PRODUCT_ID>
+				<![CDATA[100576]]>
+			</PRODUCT_ID>
+		</DATA>
+	</SABANG_RESULT>
+</xmp>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
+												aria-labelledby="custom-tabs-four-profile-tab">
+												<h4>API 설명</h4>
+												<p>
+													- 회원가입 시 발급한 API Key를 기준으로 실행됩니다.
+													<br>
+													- 주문 관리의 경우 ID 값을 기준으로 insert & update & delete & select 됩니다
+												</p>
+												<h4>Data 정의</h4>
+												<table class="table table-bordered table-hover">
+													<thead>
+														<tr>
+															<th style="width:5%">No.</th>
+															<th>Key</th>
+															<th>설명</th>
+															<th style="width:5%">필수</th>
+															<th>비고</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>pkProductSeq</td>
+															<td>품목 아이디</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>orderName</td>
+															<td>주문 명</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>orderCode</td>
+															<td>주문 코드</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>orderState</td>
+															<td>주문 상태</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+
+													</tbody>
+												</table>
+												<h4>Sample</h4>
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td>
+																<xmp>
+																	<?xml version="1.0" encoding="euc-kr"?>
+																	<SABANG_RESULT>
+																		<HEADER>
+																			<SEND_COMPAYNY_ID>dhrwjd83
+																			</SEND_COMPAYNY_ID>
+																			<SEND_DATE>
+																				<![CDATA[20190821]]>
+																			</SEND_DATE>
+																			<TOTAL_COUNT>2</TOTAL_COUNT>
+																		</HEADER>
+																		<DATA>
+																			<RESULT>SUCCESS</RESULT>
+																			<MODE>수정</MODE>
+																			<PRODUCT_ID>
+																				<![CDATA[100575]]>
+																			</PRODUCT_ID>
+																		</DATA>
+																		<DATA>
+																			<RESULT>SUCCESS</RESULT>
+																			<MODE>수정</MODE>
+																			<PRODUCT_ID>
+																				<![CDATA[100576]]>
+																			</PRODUCT_ID>
+																		</DATA>
+																	</SABANG_RESULT>
+																</xmp>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
+												aria-labelledby="custom-tabs-four-messages-tab">
+												<h4>API 설명</h4>
+												<p>
+													- 회원가입 시 발급한 API Key를 기준으로 실행됩니다.
+													<br>
+													- 결제 관리의 경우 ID 값을 기준으로 insert & update & delete & select 됩니다
+												</p>
+												<h4>Data 정의</h4>
+												<table class="table table-bordered table-hover">
+													<thead>
+														<tr>
+															<th style="width:5%">No.</th>
+															<th>Key</th>
+															<th>설명</th>
+															<th style="width:5%">필수</th>
+															<th>비고</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>pkProductSeq</td>
+															<td>품목 아이디</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>payMethod</td>
+															<td>결제방법</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>payCode</td>
+															<td>결제코드</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>payState</td>
+															<td>결제상태</td>
+															<td>Y</td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+												<h4>Sample</h4>
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td valign="top">
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<!-- /.card-footer -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+				<!-- Main row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<div class="modal fade" id="modal-success" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content bg-success">
+				<form id="form_test" role="form" th:object=${excelDto} th:action="@{/excelUpload}" method="post"
+					encType="multipart/form-data">
+					<div class="modal-header">
+						<h4 class="modal-title">Excel</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="custom-file">
+							<input type="file" name="file" class="custom-file-input" id="customFile"> <label
+								class="custom-file-label" for="customFile"></label>
+						</div>
+
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-outline-light">등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<input id="selectId" value="" />
+	<script type="text/javaScript" language="javascript" defer="defer">
+
+	function productHandle(divn){
+		if(divn == "insert"){
+			location.href='/productForm/0';
+		}else if(divn == "update"){
+			if($("#selectId").val() == null || $("#selectId").val() == ''){
+				Swal.fire({
+				  icon: 'error',
+				  title: '항목 선택',
+				  text: 'Something went wrong!'
+				})
+			}else{
+				location.href="/productForm/"+$("#selectId").val()+"";
+			}
+		}else{
+			if($("#selectId").val() == null || $("#selectId").val() == ''){
+				Swal.fire({
+				  icon: 'error',
+				  title: '항목 선택',
+				  text: 'Something went wrong!'
+				})
+			}else{
+				location.href="/productDelete/"+$("#selectId").val()+"";
+			}
+		}
+	}
+	$(document).ready(function() {
+		bsCustomFileInput.init();
+
+		$('#productTable').DataTable({
+			paging: true,
+			lengthChange: true,
+			searching: true,
+			ordering: true,
+			info: false,
+			autoWidth: false,
+			responsive: true,
+			language: {
+				emptyTable: "검색된 결과가 없습니다.",
+			},
+			select: { style: 'single' },
+		   	columnDefs:[
+			   	{
+	            	targets: [1],
+	            	searchable: false,
+	      			visible: false
+	            }
+	        ]
+		});
+		$("#productTbody").on('click', 'tr', function() {
+			var DATATABLE_ARRAY = $("#productTable").DataTable().row(this).data();
+			$("#selectId").val(DATATABLE_ARRAY[1]);
+		});
+		
+	});
+</script>
+</th:block>

@@ -66,7 +66,7 @@
 						<!-- small box -->
 						<div class="small-box bg-warning">
 							<div class="inner">
-								<h3>44</h3>
+								<h3 th:text="${productCount}">0</h3>
 								<p>품목 수량</p>
 							</div>
 							<div class="icon">
@@ -98,7 +98,7 @@
 						<div class="card">
 							<div class="card-header">
 								<h3 class="card-title">
-									<i class="fas fa-chart-pie mr-1"></i> 주문 현황
+									<i class="fas fa-chart-bar mr-1"></i>주문 현황
 								</h3>
 								<!-- <div class="card-tools">
 								<ul class="nav nav-pills ml-auto">
@@ -126,7 +126,9 @@
 						<div class="card">
 							<div class="card-header">
 								<div class="d-flex justify-content-between">
-									<h3 class="card-title">재고 현황</h3>
+									<h3 class="card-title">
+										<i class="fas fa-chart-pie mr-1"></i> 재고 현황
+									</h3>
 								</div>
 							</div>
 							<div class="card-body">
@@ -150,19 +152,41 @@
 	<!-- /.content-wrapper -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
+		var orderList = [[${orderList}]];
+		console.log(orderList);
 
-		/*var orderList = [[${orderList}]];
-		console.log(orderList.length);*/
+		var payList = [[${payList}]];
+		console.log(payList);
 		/*]]>*/
+		
+		var orderColumn = [];
+		var orderData = [];
+		
+		var payColumn = [];
+		var payData = [];
+		
+		for(var i = 0; i < orderList.length; i++){
+			orderColumn.push(orderList[i].productName);
+			orderData.push(orderList[i].numCount);
+		}
+		console.log(orderColumn)
+		console.log(orderData)
+		
+		for(var i = 0; i < payList.length; i++){
+			payColumn.push(payList[i].productName);
+			payData.push(payList[i].numCount);
+		}
+		console.log(orderColumn)
+		console.log(orderData)
 		
 		// bar chart
 		var ProductChartCanvas = document.getElementById('line-chart').getContext('2d')
 
 		var ProductChartData = {
-			labels: [1, 2, 3, 4, 5, 6, 7],
+			labels: orderColumn,
 			datasets: [
 				{
-					label: '남은수량',
+					label: '주문량',
 					backgroundColor: 'rgba(60,141,188,0.9)',
 					borderColor: 'rgba(60,141,188,0.8)',
 					pointRadius: false,
@@ -170,18 +194,7 @@
 					pointStrokeColor: 'rgba(60,141,188,1)',
 					pointHighlightFill: '#fff',
 					pointHighlightStroke: 'rgba(60,141,188,1)',
-					data: [28, 48, 40, 19, 86, 27, 90]
-				},
-				{
-					label: '전체수량',
-					backgroundColor: 'rgba(210, 214, 222, 1)',
-					borderColor: 'rgba(210, 214, 222, 1)',
-					pointRadius: false,
-					pointColor: 'rgba(210, 214, 222, 1)',
-					pointStrokeColor: '#c1c7d1',
-					pointHighlightFill: '#fff',
-					pointHighlightStroke: 'rgba(220,220,220,1)',
-					data: [65, 59, 80, 81, 56, 55, 40]
+					data: orderData
 				},
 			]
 		}
@@ -208,10 +221,6 @@
 
 		//var barChartCanvas = document.getElementById('barChart').getContext('2d')
 		var barChartData = $.extend(true, {}, ProductChartData)
-		var temp0 = ProductChartData.datasets[0]
-		var temp1 = ProductChartData.datasets[1]
-		barChartData.datasets[0] = temp1
-		barChartData.datasets[1] = temp0
 
 		var barChartOptions = {
 			responsive: true,
@@ -229,17 +238,10 @@
 
 		var donutChartCanvas = document.getElementById('sales-chart').getContext('2d')
 		var donutData = {
-			labels: [
-				'품목1',
-				'품목2',
-				'품목3',
-				'품목4',
-				'품목5',
-				'품목6',
-			],
+			labels: payColumn,
 			datasets: [
 				{
-					data: [700, 500, 400, 600, 300, 100],
+					data: payData,
 					backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
 				}
 			]

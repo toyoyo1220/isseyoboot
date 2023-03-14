@@ -22,4 +22,6 @@ public interface PayMapper {
 
 	int seletPayCount(PayDto payDto);
 
+	List<PayDto> selectPayListJoin(PayDto payDto);
+
 }

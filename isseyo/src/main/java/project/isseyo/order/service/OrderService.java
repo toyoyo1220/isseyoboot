@@ -47,4 +47,9 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		return orderMapper.seletOrderCount(orderDto);
 	}
+
+	public List<OrderDto> selectOrderListJoin(OrderDto orderDto) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectOrderListJoin(orderDto);
+	}
 }

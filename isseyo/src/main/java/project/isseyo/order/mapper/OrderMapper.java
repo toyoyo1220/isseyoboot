@@ -22,4 +22,6 @@ public interface OrderMapper {
 
 	int seletOrderCount(OrderDto orderDto);
 
+	List<OrderDto> selectOrderListJoin(OrderDto orderDto);
+
 }

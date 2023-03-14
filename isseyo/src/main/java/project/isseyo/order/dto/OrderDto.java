@@ -29,4 +29,7 @@ public class OrderDto extends ProductDto{
 	
 	/** 사용자 SEQ */
 	private int pkUserSeq;
+	
+	/** 갯수 */
+	private int numCount;
 }

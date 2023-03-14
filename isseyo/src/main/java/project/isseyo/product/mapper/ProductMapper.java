@@ -34,4 +34,6 @@ public interface ProductMapper {
 
 	void deleteProduct(int pkProductSeq);
 
+	int seletProductCount(ProductDto productDto);
+
 }

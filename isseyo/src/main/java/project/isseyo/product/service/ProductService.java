@@ -138,4 +138,8 @@ public class ProductService {
 		productMapper.deleteProduct(pkProductSeq);
 		return;
 	}
+	public int seletProductCount(ProductDto productDto) {
+		// TODO Auto-generated method stub
+		return productMapper.seletProductCount(productDto);
+	}
 }

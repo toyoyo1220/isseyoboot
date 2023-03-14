@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
-	<mapper namespace="project.isseyo.pay.mapper.PayMapper">	<!-- xml파일을 사용할 mapper가 있는 경로 -->
-  	
-	
-	<insert id="insertPay" parameterType="java.util.HashMap" >
-			<![CDATA[
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.isseyo.pay.mapper.PayMapper">
+	<!-- xml파일을 사용할 mapper가 있는 경로 -->
+	<insert id="insertPay" parameterType="java.util.HashMap">
+		<![CDATA[
 			INSERT INTO ISY_PAY 
 				( PAY_CODE
 				, PAY_METHOD
@@ -27,10 +24,8 @@
 				  )
 				]]>
 	</insert>
-	
-	
 	<update id="updatePay" parameterType="java.util.HashMap">
-			<![CDATA[
+		<![CDATA[
 				UPDATE ISY_PAY SET
 					PAY_CODE = #{payCode}
 				  , PAY_METHOD = #{payMethod}
@@ -38,18 +33,15 @@
 				WHERE PK_PAY_SEQ = #{pkPaySeq}
 			]]>
 	</update>
-	
 	<delete id="deletePay" parameterType="java.util.HashMap">
-			<![CDATA[
+		<![CDATA[
 				DELETE
 				FROM ISY_PAY
 				WHERE PK_PAY_SEQ = #{pkPaySeq}
 			]]>
 	</delete>
-	
-	
 	<select id="selectPay" parameterType="payDto" resultType="payDto">
-			<![CDATA[
+		<![CDATA[
 				SELECT
 					PK_PAY_SEQ
 					, PAY_CODE
@@ -65,9 +57,8 @@
 				AND PK_USER_SEQ = #{pkUserSeq}
 			]]>
 	</select>
-	
 	<select id="selectPayList" parameterType="payDto" resultType="payDto">
-			<![CDATA[
+		<![CDATA[
 			SELECT
 				PK_PAY_SEQ
 				, PAY_CODE
@@ -83,9 +74,8 @@
 			ORDER BY PK_PAY_SEQ DESC
 			]]>
 	</select>
-	
-	<select id="seletPayCount" parameterType="payDto"  resultType="int">
-			<![CDATA[
+	<select id="seletPayCount" parameterType="payDto" resultType="int">
+		<![CDATA[
 			SELECT
 				COUNT(*)
 			FROM ISY_PAY
@@ -94,5 +84,48 @@
 			ORDER BY PK_PAY_SEQ DESC
 			]]>
 	</select>
-	
+	<select id="selectPayListJoin" parameterType="payDto" resultType="payDto">
+		<![CDATA[ 
+		SELECT 
+			PK_PRODUCT_SEQ
+			, PRODUCT_NAME
+			, PRODUCT_CODE 
+			, STANDARD 
+			, UNIT 
+			, PRODUCT_IMG 
+			, DIVN 
+			, ETC 
+			, USE_YN 
+			, DEL_YN 
+			, REGIST_ID
+			, REGIST_DT 
+			, NUM_COUNT
+			, PK_USER_SEQ 
+			, USER_NM 
+		FROM (
+			SELECT A.PK_PRODUCT_SEQ 
+				, A.PRODUCT_NAME 
+				, A.PRODUCT_CODE 
+				, A.STANDARD 
+				, A.UNIT 
+				, A.PRODUCT_IMG 
+				, A.DIVN 
+				, A.ETC 
+				, A.USE_YN 
+				, A.DEL_YN 
+				, A.REGIST_ID 
+				, A.REGIST_DT
+				, A.PK_USER_SEQ 
+				, COUNT(*)																	AS NUM_COUNT
+				, (SELECT C.USER_NM FROM isy_user C WHERE A.PK_USER_SEQ = C.PK_USER_SEQ)	AS USER_NM 
+			FROM ISY_PRODUCT A 
+			INNER JOIN ISY_PAY B 
+			ON A.PK_PRODUCT_SEQ = B.PK_PRODUCT_SEQ
+			WHERE 1=1
+			AND  A.DEL_YN = 'N'
+			AND A.PK_USER_SEQ = #{pkUserSeq}
+			GROUP BY A.PK_PRODUCT_SEQ
+		)PY  
+		]]>
+	</select>
 </mapper>

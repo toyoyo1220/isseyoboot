@@ -166,9 +166,21 @@
 				, VALUE
 				, ATTRIBUTE
 				, PK_USER_SEQ
-			FROM isy_product_detail 
+			FROM ISY_PRODUCT_DETAIL 
 			WHERE PK_USER_SEQ = #{pkUserSeq}
 			AND PK_PRODUCT_SEQ = #{pkProductSeq}
+	</select>
+	
+	<select id="seletProductCount" parameterType="productDto"  resultType="int">
+			<![CDATA[
+			SELECT
+				COUNT(*)
+			FROM ISY_PRODUCT
+			WHERE 1=1
+			AND DEL_YN = 'N'
+			AND PK_USER_SEQ = #{pkUserSeq}
+			ORDER BY PK_PRODUCT_SEQ DESC
+			]]>
 	</select>
 	
 </mapper>

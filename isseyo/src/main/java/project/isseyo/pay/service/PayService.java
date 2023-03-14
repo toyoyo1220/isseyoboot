@@ -41,5 +41,9 @@ public class PayService {
 		// TODO Auto-generated method stub
 		return payMapper.seletPayCount(payDto);
 	}
+	public List<PayDto> selectPayListJoin(PayDto payDto) {
+		// TODO Auto-generated method stub
+		return payMapper.selectPayListJoin(payDto);
+	}
 
 }

@@ -88,4 +88,49 @@
 			ORDER BY PK_ORDER_SEQ DESC
 	</select>
 	
+	<select id="selectOrderListJoin" parameterType="orderDto" resultType="orderDto"> 
+		SELECT 
+			PK_PRODUCT_SEQ 
+			, PRODUCT_NAME 
+			, PRODUCT_CODE 
+			, STANDARD 
+			, UNIT 
+			, PRODUCT_IMG 
+			, DIVN 
+			, ETC 
+			, USE_YN 
+			, DEL_YN 
+			, REGIST_ID 
+			, REGIST_DT 
+			, PK_USER_SEQ 
+			, NUM_COUNT
+			, USER_NM 
+		FROM (
+			SELECT 
+				A.PK_PRODUCT_SEQ 
+				, A.PRODUCT_NAME 
+				, A.PRODUCT_CODE 
+				, A.STANDARD 
+				, A.UNIT 
+				, A.PRODUCT_IMG 
+				, A.DIVN 
+				, A.ETC 
+				, A.USE_YN 
+				, A.DEL_YN 
+				, A.REGIST_ID 
+				, A.REGIST_DT 
+				, A.PK_USER_SEQ 
+ 				, COUNT(*)																	AS NUM_COUNT
+				, (SELECT C.USER_NM FROM isy_user C WHERE A.PK_USER_SEQ = C.PK_USER_SEQ)	AS USER_NM
+			 FROM ISY_PRODUCT A 
+			 INNER JOIN ISY_ORDER B 
+			 ON A.PK_PRODUCT_SEQ = B.PK_PRODUCT_SEQ
+			 WHERE 1=1
+			 AND DEL_YN = 'N'
+			 AND A.PK_USER_SEQ = #{pkUserSeq}
+			GROUP BY A.PK_PRODUCT_SEQ
+	
+		)PA 
+	</select>
+	
 </mapper>

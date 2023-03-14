@@ -44,7 +44,13 @@ public class JsonapiController {
 	
 	@Autowired
 	private PayService payService;
-
+	/**
+	 * 품목 정보를 조회한다.
+	 * @param pkProductSeq
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@GetMapping(value = "get/product/{bizApiKey}/{pkProductSeq}")
 	public ArrayList<HashMap<String, Object>> selectProduct(
 			@PathVariable String bizApiKey
@@ -78,7 +84,12 @@ public class JsonapiController {
 		
 		return response;
 	}
-	
+	/**
+	 * 품목 정보들을 조회한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@GetMapping(value = "get/product/all/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> selectProductList(
 			@PathVariable String bizApiKey
@@ -106,7 +117,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-
+	/**
+	 * 품목 정보를 등록한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PostMapping(value = "post/product/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> productInsert(
 			@PathVariable String bizApiKey
@@ -148,7 +164,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 품목 정보를 수정한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PutMapping(value = "put/product/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> productUpdate(
 			@PathVariable String bizApiKey
@@ -193,7 +214,13 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 품목 정보를 삭제한다.
+	 * @param pkProductSeq
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@DeleteMapping(value = "delete/product/{bizApiKey}/{pkProductSeq}")
 	public ArrayList<HashMap<String, Object>> productDelete(
 			@PathVariable String bizApiKey
@@ -222,7 +249,13 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 주문 정보를 조회한다.
+	 * @param pkOrderSeq
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@GetMapping(value = "get/order/{bizApiKey}/{pkOrderSeq}")
 	public ArrayList<HashMap<String, Object>> selectOrder(
 			@PathVariable String bizApiKey
@@ -255,7 +288,13 @@ public class JsonapiController {
 		
 		return response;
 	}
-	
+	/**
+	 * 주문 정보들을 조회한다.
+	 * @param pkOrderSeq
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@GetMapping(value = "get/order/all/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> selectOrderList(
 			@PathVariable String bizApiKey
@@ -283,7 +322,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-
+	/**
+	 * 주문 정보를 등록한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PostMapping(value = "post/order/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> orderInsert(
 			@PathVariable String bizApiKey
@@ -316,7 +360,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 주문 정보를 수정한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PutMapping(value = "put/order/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> orderUpdate(
 			@PathVariable String bizApiKey
@@ -411,7 +460,12 @@ public class JsonapiController {
 		
 		return response;
 	}
-	
+	/**
+	 * 결제 정보들을 조회한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@GetMapping(value = "get/pay/all/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> selectPayList(
 			@PathVariable String bizApiKey
@@ -439,7 +493,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-
+	/**
+	 * 결제 정보를 등록한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PostMapping(value = "post/pay/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> payInsert(
 			@PathVariable String bizApiKey
@@ -472,7 +531,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 결제 정보를 수정한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@PutMapping(value = "put/pay/{bizApiKey}")
 	public ArrayList<HashMap<String, Object>> payUpdate(
 			@PathVariable String bizApiKey
@@ -506,7 +570,12 @@ public class JsonapiController {
 		}
 		return response;
 	}
-	
+	/**
+	 * 결제 정보를 삭제한다.
+	 * @param bizApiKey
+	 * @return ArrayList<HashMap<String, Object>>
+	 * @exception Exception
+	 */
 	@DeleteMapping(value = "delete/pay/{bizApiKey}/{pkPaySeq}")
 	public ArrayList<HashMap<String, Object>> payDelete(
 			@PathVariable String bizApiKey

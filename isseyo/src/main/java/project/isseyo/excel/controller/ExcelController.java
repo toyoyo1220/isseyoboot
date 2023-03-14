@@ -33,7 +33,7 @@ public class ExcelController {
 	 * 파일 업로드
 	 *
 	 * @param file
-	 * @return
+	 * @return "redirect:productMain"
 	 * @throws Exception
 	 */
 	@RequestMapping("/excelUpload")

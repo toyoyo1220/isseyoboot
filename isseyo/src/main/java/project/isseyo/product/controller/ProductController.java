@@ -23,6 +23,11 @@ public class ProductController {
 	@Autowired
     private ProductService productService;
 	
+	/**
+	 * 품목을 메인화면으로 이동 한다.
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@GetMapping("/productMain")
     public ModelAndView productMain(HttpServletRequest request) {
 		LoginDto loginDto = (LoginDto) request.getSession().getAttribute("loginDto");
@@ -36,6 +41,12 @@ public class ProductController {
 		return mv;
     }
 	
+	/**
+	 * 품목을 등록화면으로 이동 한다.
+	 * @param pkProductSeq
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@GetMapping("/productForm/{pkProductSeq}")
     public ModelAndView productForm(
     		@PathVariable int pkProductSeq
@@ -65,6 +76,12 @@ public class ProductController {
 		return mv;
     }
 	
+	/**
+	 * 품목을 삭제 한다.
+	 * @param pkProductSeq
+	 * @return "redirect:/productMain"
+	 * @exception Exception
+	 */
 	@GetMapping("/productDelete/{pkProductSeq}")
     public String productDelete(
     		@PathVariable int pkProductSeq

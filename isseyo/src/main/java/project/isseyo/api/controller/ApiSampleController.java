@@ -12,7 +12,11 @@ import project.isseyo.product.dto.ProductDto;
 
 @Controller
 public class ApiSampleController {
-	
+	/**
+	 * API 화면으로 이동한다
+	 * @return pages/api/apiSample
+	 * @exception Exception
+	 */
 	@GetMapping("/apiMain")
     public String apiMain(HttpServletRequest request) {
 		

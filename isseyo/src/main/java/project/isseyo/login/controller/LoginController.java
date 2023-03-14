@@ -36,23 +36,41 @@ public class LoginController {
 
 	@Autowired
 	private PayService payService;
-
+	/**
+	 * 로그인화면 으로 이동 한다.
+	 * @param pkProductSeq
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@GetMapping("/")
 	public String loginMain() {
 		return "pages/login/loginMain";
 	}
-
+	/**
+	 * 로그인화면 으로 이동 한다.
+	 * @param pkProductSeq
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@GetMapping("/loginMain")
 	public String loginView() {
 		return "pages/login/loginMain";
 	}
-
+	/**
+	 * 로그아웃 한다.
+	 * @return redirect:/loginMain
+	 * @exception Exception
+	 */
 	@GetMapping("/logout")
 	public String loginOut(HttpServletRequest request) {
 		request.getSession().setAttribute("loginDto", null);
 		return "redirect:/loginMain";
 	}
-
+	/**
+	 * 메인화면으로 이동 한다.
+	 * @return pages/main/main
+	 * @exception Exception
+	 */
 	@GetMapping("/main")
 	public String main(HttpServletRequest request, Model model) {
 		LoginDto loginDto = (LoginDto) request.getSession().getAttribute("loginDto");
@@ -80,7 +98,12 @@ public class LoginController {
 		model.addAttribute("payCount", payCount);
 		return "pages/main/main";
 	}
-
+	/**
+	 * 로그인 한다.
+	 * @param loginDto
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@PostMapping("/loginUp")
 	public String loginUp(@ModelAttribute("loginDto") LoginDto loginDto, HttpServletRequest request) {
 		LoginDto loginCheck = loginService.selectUser(loginDto);
@@ -92,7 +115,12 @@ public class LoginController {
 			return "redirect:/loginMain";
 		}
 	}
-
+	/**
+	 * 회원가입 등록/수정 화면으로 이동 한다.
+	 * @param divn
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
 	@GetMapping("/sign/{divn}")
 	public ModelAndView signMain(@PathVariable String divn, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("pages/sign/sign");
@@ -105,7 +133,11 @@ public class LoginController {
 		mv.addObject("divn", divn);
 		return mv;
 	}
-
+	/**
+	 * 회원가입 정보를 등록한다
+	 * @return loginMain
+	 * @exception Exception
+	 */
 	@PostMapping("/signUp/{divn}")
 	public String signup(@ModelAttribute("loginDto") LoginDto loginDto, @PathVariable String divn) {
 		if (divn.equals("update")) {

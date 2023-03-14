@@ -159,6 +159,7 @@
 			AND PK_USER_SEQ = #{pkUserSeq}
 			ORDER BY PK_PRODUCT_SEQ DESC
 	</select>
+	
 	<select id="selectProductDetailList" parameterType="productDto" resultType="productDto">
 			SELECT
 				PK_PRODUCT_SEQ

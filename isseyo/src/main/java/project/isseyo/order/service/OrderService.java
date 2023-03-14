@@ -42,4 +42,9 @@ public class OrderService {
 		return;
 		
 	}
+
+	public int seletOrderCount(OrderDto orderDto) {
+		// TODO Auto-generated method stub
+		return orderMapper.seletOrderCount(orderDto);
+	}
 }

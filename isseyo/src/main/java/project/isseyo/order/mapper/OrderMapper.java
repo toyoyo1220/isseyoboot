@@ -20,4 +20,6 @@ public interface OrderMapper {
 
 	void deleteOrder(int pkOrderSeq);
 
+	int seletOrderCount(OrderDto orderDto);
+
 }

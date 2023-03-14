@@ -84,4 +84,15 @@
 			]]>
 	</select>
 	
+	<select id="seletPayCount" parameterType="payDto"  resultType="int">
+			<![CDATA[
+			SELECT
+				COUNT(*)
+			FROM ISY_PAY
+			WHERE 1=1
+			AND PK_USER_SEQ = #{pkUserSeq}
+			ORDER BY PK_PAY_SEQ DESC
+			]]>
+	</select>
+	
 </mapper>

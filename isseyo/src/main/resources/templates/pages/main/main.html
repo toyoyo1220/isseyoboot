@@ -40,15 +40,12 @@
 						<!-- small box -->
 						<div class="small-box bg-info">
 							<div class="inner">
-								<h3>150</h3>
+								<h3 th:text="${orderCount}">0</h3>
 								<p>신규 주문</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-bag"></i>
 							</div>
-							<a href="#" class="small-box-footer">자세히 보기
-								<i class="fas fa-arrow-circle-right"></i>
-							</a>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -56,18 +53,12 @@
 						<!-- small box -->
 						<div class="small-box bg-success">
 							<div class="inner">
-								<h3>
-									53
-								</h3>
-
+								<h3 th:text="${payCount}">0</h3>
 								<p>결제 현황</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-stats-bars"></i>
 							</div>
-							<a href="#" class="small-box-footer">자세히 보기
-								<i class="fas fa-arrow-circle-right"></i>
-							</a>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -76,14 +67,11 @@
 						<div class="small-box bg-warning">
 							<div class="inner">
 								<h3>44</h3>
-								<p>재고 알림</p>
+								<p>품목 수량</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-person-add"></i>
 							</div>
-							<a href="#" class="small-box-footer">자세히 보기
-								<i class="fas fa-arrow-circle-right"></i>
-							</a>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -97,9 +85,6 @@
 							<div class="icon">
 								<i class="ion ion-checkmark"></i>
 							</div>
-							<a href="#" class="small-box-footer">자세히 보기
-								<i class="fas fa-arrow-circle-right"></i>
-							</a>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -149,12 +134,6 @@
 									<canvas id="sales-chart" height="200"></canvas>
 								</div>
 								<div class="d-flex flex-row justify-content-end">
-									<span class="mr-2">
-										<i class="fas fa-square text-teal"></i> 2023
-									</span>
-									<span>
-										<i class="fas fa-square text-gray"></i> 2022
-									</span>
 								</div>
 							</div>
 						</div>
@@ -169,10 +148,14 @@
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-	<script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
 
-		// 바차트
-
+		/*var orderList = [[${orderList}]];
+		console.log(orderList.length);*/
+		/*]]>*/
+		
+		// bar chart
 		var ProductChartCanvas = document.getElementById('line-chart').getContext('2d')
 
 		var ProductChartData = {
@@ -247,12 +230,12 @@
 		var donutChartCanvas = document.getElementById('sales-chart').getContext('2d')
 		var donutData = {
 			labels: [
-				'Chrome',
-				'IE',
-				'FireFox',
-				'Safari',
-				'Opera',
-				'Navigator',
+				'품목1',
+				'품목2',
+				'품목3',
+				'품목4',
+				'품목5',
+				'품목6',
 			],
 			datasets: [
 				{

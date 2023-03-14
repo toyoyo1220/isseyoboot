@@ -37,5 +37,9 @@ public class PayService {
 		payMapper.deletePay(pkPaySeq);
 		return;
 	}
+	public int seletPayCount(PayDto payDto) {
+		// TODO Auto-generated method stub
+		return payMapper.seletPayCount(payDto);
+	}
 
 }

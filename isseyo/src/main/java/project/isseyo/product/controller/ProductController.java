@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import project.isseyo.login.dto.LoginDto;
@@ -90,11 +91,18 @@ public class ProductController {
 			, @PathVariable String divn
 			, HttpServletRequest request
 			, Model model
-		)
-			throws Exception {
+		){
 		LoginDto loginDto = (LoginDto) request.getSession().getAttribute("loginDto");
-		String[] attribute = productDto.getAttribute().split(",");
-		String[] value =  productDto.getValue().split(",");
+		String[] attribute = {};
+		String[] value = {};
+		
+		if(StringUtils.isEmpty(productDto.getAttribute())) {
+			
+		}else {
+			attribute = productDto.getAttribute().split(",");
+			value =  productDto.getValue().split(",");
+		}
+		
 		
 		HashMap<String, Object> productMap = new HashMap<String, Object>();
 		productMap.put("productName", productDto.getProductName());

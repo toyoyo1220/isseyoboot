@@ -79,4 +79,13 @@
 			ORDER BY PK_ORDER_SEQ DESC
 	</select>
 	
+	<select id="seletOrderCount" parameterType="orderDto" resultType="int">
+			SELECT
+				COUNT(*)
+			FROM ISY_ORDER
+			WHERE 1=1
+			AND PK_USER_SEQ = #{pkUserSeq}
+			ORDER BY PK_ORDER_SEQ DESC
+	</select>
+	
 </mapper>

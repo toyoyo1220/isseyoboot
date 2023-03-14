@@ -164,31 +164,58 @@
 														<tr>
 															<td  valign="top">
 <xmp>
-	<?xml version="1.0" encoding="euc-kr"?>
-	<SABANG_RESULT>
-		<HEADER>
-			<SEND_COMPAYNY_ID>dhrwjd83
-			</SEND_COMPAYNY_ID>
-			<SEND_DATE>
-				<![CDATA[20190821]]>
-			</SEND_DATE>
-			<TOTAL_COUNT>2</TOTAL_COUNT>
-		</HEADER>
-		<DATA>
-			<RESULT>SUCCESS</RESULT>
-			<MODE>수정</MODE>
-			<PRODUCT_ID>
-				<![CDATA[100575]]>
-			</PRODUCT_ID>
-		</DATA>
-		<DATA>
-			<RESULT>SUCCESS</RESULT>
-			<MODE>수정</MODE>
-			<PRODUCT_ID>
-				<![CDATA[100576]]>
-			</PRODUCT_ID>
-		</DATA>
-	</SABANG_RESULT>
+
+class API {
+    public static void main(String[] args) {
+		String API_KEY = "27005308-61ae-4cd7-9343-065b3b417bab";
+		int pkProductSeq = 0;
+		URL url = new URL("http://192.168.1.39:8080/json/api/post/product/{API_KEY}/{pkProductSeq}");
+
+		ObjectMapper mapper = new ObjectMapper();
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br;
+
+		List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
+
+		try {
+				HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+				//Request Header 정의
+				con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+				//전송방식
+				con.setRequestMethod("GET");
+
+				//서버에 연결되는 Timeout 시간 설정
+				con.setConnectTimeout(5000);
+
+				//InputStream 읽어 오는 Timeout 시간 설정
+				con.setReadTimeout(5000); 
+
+				//URLConnection에 대한 doOutput 필드값을 지정된 값으로 설정한다. 
+				//URL 연결은 입출력에 사용될 수 있다. 
+				//URL 연결을 출력용으로 사용하려는 경우 DoOutput 플래그를 true로 설정하고, 
+				//그렇지 않은 경우는 false로 설정해야 한다. 기본값은 false이다.
+				con.setDoOutput(false); 
+
+				if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+					String line;
+					while ((line = br.readLine()) != null) {
+						b.append(line).append("\n");
+					}
+					br.close();
+
+					mapper.readValue(sb.toString(), new TypeReference<List<Map<String, Object>>>(){});
+					model.addAttribute("listMap", listMap);
+				} else {
+					model.addAttribute("error", con.getResponseMessage());
+				}
+			} catch (Exception e) {
+				System.err.println(e.toString());
+			}
+		}
+	}
 </xmp>
 															</td>
 														</tr>
@@ -252,31 +279,57 @@
 														<tr>
 															<td>
 																<xmp>
-																	<?xml version="1.0" encoding="euc-kr"?>
-																	<SABANG_RESULT>
-																		<HEADER>
-																			<SEND_COMPAYNY_ID>dhrwjd83
-																			</SEND_COMPAYNY_ID>
-																			<SEND_DATE>
-																				<![CDATA[20190821]]>
-																			</SEND_DATE>
-																			<TOTAL_COUNT>2</TOTAL_COUNT>
-																		</HEADER>
-																		<DATA>
-																			<RESULT>SUCCESS</RESULT>
-																			<MODE>수정</MODE>
-																			<PRODUCT_ID>
-																				<![CDATA[100575]]>
-																			</PRODUCT_ID>
-																		</DATA>
-																		<DATA>
-																			<RESULT>SUCCESS</RESULT>
-																			<MODE>수정</MODE>
-																			<PRODUCT_ID>
-																				<![CDATA[100576]]>
-																			</PRODUCT_ID>
-																		</DATA>
-																	</SABANG_RESULT>
+																	class API {
+public static void main(String[] args) {
+	String API_KEY = "27005308-61ae-4cd7-9343-065b3b417bab";
+	int pkProductSeq = 0;
+	URL url = new URL("http://192.168.1.39:8080/json/api/post/order/{API_KEY}/{pkProductSeq}");
+
+	ObjectMapper mapper = new ObjectMapper();
+	StringBuilder sb = new StringBuilder();
+	BufferedReader br;
+
+	List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
+
+	try {
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+			//Request Header 정의
+			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+			//전송방식
+			con.setRequestMethod("GET");
+
+			//서버에 연결되는 Timeout 시간 설정
+			con.setConnectTimeout(5000);
+
+			//InputStream 읽어 오는 Timeout 시간 설정
+			con.setReadTimeout(5000); 
+
+			//URLConnection에 대한 doOutput 필드값을 지정된 값으로 설정한다. 
+			//URL 연결은 입출력에 사용될 수 있다. 
+			//URL 연결을 출력용으로 사용하려는 경우 DoOutput 플래그를 true로 설정하고, 
+			//그렇지 않은 경우는 false로 설정해야 한다. 기본값은 false이다.
+			con.setDoOutput(false); 
+
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+				String line;
+				while ((line = br.readLine()) != null) {
+					b.append(line).append("\n");
+				}
+				br.close();
+
+				mapper.readValue(sb.toString(), new TypeReference<List<Map<String, Object>>>(){});
+				model.addAttribute("listMap", listMap);
+			} else {
+				model.addAttribute("error", con.getResponseMessage());
+			}
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+	}
+}
 																</xmp>
 															</td>
 														</tr>
@@ -338,6 +391,59 @@
 													<tbody>
 														<tr>
 															<td valign="top">
+																<xmp>
+																	class API {
+public static void main(String[] args) {
+	String API_KEY = "27005308-61ae-4cd7-9343-065b3b417bab";
+	int pkProductSeq = 0;
+	URL url = new URL("http://192.168.1.39:8080/json/api/post/pay/{API_KEY}/{pkProductSeq}");
+
+	ObjectMapper mapper = new ObjectMapper();
+	StringBuilder sb = new StringBuilder();
+	BufferedReader br;
+
+	List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
+
+	try {
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+			//Request Header 정의
+			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+			//전송방식
+			con.setRequestMethod("GET");
+
+			//서버에 연결되는 Timeout 시간 설정
+			con.setConnectTimeout(5000);
+
+			//InputStream 읽어 오는 Timeout 시간 설정
+			con.setReadTimeout(5000); 
+
+			//URLConnection에 대한 doOutput 필드값을 지정된 값으로 설정한다. 
+			//URL 연결은 입출력에 사용될 수 있다. 
+			//URL 연결을 출력용으로 사용하려는 경우 DoOutput 플래그를 true로 설정하고, 
+			//그렇지 않은 경우는 false로 설정해야 한다. 기본값은 false이다.
+			con.setDoOutput(false); 
+
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+				String line;
+				while ((line = br.readLine()) != null) {
+					b.append(line).append("\n");
+				}
+				br.close();
+
+				mapper.readValue(sb.toString(), new TypeReference<List<Map<String, Object>>>(){});
+				model.addAttribute("listMap", listMap);
+			} else {
+				model.addAttribute("error", con.getResponseMessage());
+			}
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+	}
+}
+																</xmp>
 															</td>
 														</tr>
 													</tbody>

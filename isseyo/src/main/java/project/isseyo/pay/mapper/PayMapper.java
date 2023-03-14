@@ -20,4 +20,6 @@ public interface PayMapper {
 
 	void deletePay(int pkPaySeq);
 
+	int seletPayCount(PayDto payDto);
+
 }
